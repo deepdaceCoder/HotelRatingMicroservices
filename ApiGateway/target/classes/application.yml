@@ -1,0 +1,52 @@
+server:
+  port: 8084
+  
+spring:
+  application:
+    name: ApiGateway
+#  main:
+#    web-application-type: reactive
+  cloud:
+    gateway:
+      mvc:
+        routes:
+        - id: USERSERVICE
+          uri: lb://USERSERVICE
+          predicates:
+          - Path=/users/**
+        - id: HOTELSERVICE
+          uri: lb://HOTELSERVICE
+          predicates:
+          - Path=/hotels/**
+        - id: RATINGSERVICE
+          uri: lb://RATINGSERVICE
+          predicates:
+          - Path=/ratings/**
+#  security:
+#    oauth2:
+#      client:
+#        provider:
+#          okta:
+#            authorization-uri: http://localhost:8084/okta-custom-login
+            
+    
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8756/eureka
+      
+#okta:
+#  oauth2:
+#    issuer: https://dev-39770223.okta.com/oauth2/default
+#    audience: api://default
+#    client-id: 0oaf1ifamaBq0q9wE5d7
+#    client-secret: c2rDi-9UwWyZO6GeCKs3HCzfx5ZTS_nYBq-ktIEWvbOxNPuFZMgD3nPe9LR6R1_W
+#    scopes: openid, profile, email, offline_access
+    
+    
+    
+    
